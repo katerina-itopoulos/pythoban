@@ -1,26 +1,28 @@
-# pythoban
+# Pythoban
+
 Repository for advanced programming course group project on a game developed with Python.
 
-#Origin
+# Origin
 
 Pythoban is our take on the Japanese game Sokoban which is a puzzle video game in which the warehouse keeper ( which translates to Sokoban in Japanese) is required to push boxes around a warehouse and needs to get them into their designated goal locations. The game was designed in 1981 by Hiroyuki Imabayashi and first published in December 1982. For our edition, we have changed the character to a snake as we are doing an advanced Python course assignment and we have added various custom items to the course that differ from regular boxes and introduce irregular behaviour to each level. 
 
 Information from : https://en.wikipedia.org/wiki/Sokoban
 
-#Introduction 
+# Introduction
 
 Welcome to Pythoban! Our game is designed to be a fun problem-solving challenge with multiple levels and engaging graphics and sounds derived from Sokoban.
 
-#Features
+# Features
 
 
-#Installation Guide 
+# Installation Guide
 
-#Requirements 
+# Requirements
+
 Python 3.0
 Pygame 2.0
 
-#Instructions for installation
+# Instructions for installation
 
 1. Clone this repository
    git clone <enter url for our repo>
@@ -37,7 +39,7 @@ Pygame 2.0
    
    
 
-#Gameplay instructions
+# How to play
 
 The game starts at the main menu screen where the player can select the level.
 The player can move using the arrow keys : up, down, left and right
@@ -53,17 +55,18 @@ Portal items allow the player and box to travel to the corresponding portal.
 Hole items will make the game unsolvable if the player or box with a goal falls inside. Holes can be closed if a box without a goal is pushed inside it. 
 
 
-#Screenshots 
+# Screenshots
 
-#License 
+# License
 This project is licensed under the MIT License 
 
-#Authors 
+# Authors
 Katerina Itopoulos
 Juan Méndez Nogales
 David Rodrigues
 
-#References  
+# References
+
 https://en.wikipedia.org/wiki/Sokoban
 https://en.wikipedia.org/wiki/Baba_Is_You
 https://www.sokobanonline.com/help/how-to-play
