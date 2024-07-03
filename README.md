@@ -1,6 +1,8 @@
 # pythoban
 Repository for advanced programming course group project on a game developed with Python.
 
+#Origin
+
 Pythoban is our take on the Japanese game Sokoban which is a puzzle video game in which the warehouse keeper ( which translates to Sokoban in Japanese) is required to push boxes around a warehouse and needs to get them into their designated goal locations. The game was designed in 1981 by Hiroyuki Imabayashi and first published in December 1982. For our edition, we have changed the character to a snake as we are doing an advanced Python course assignment and we have added various custom items to the course that differ from regular boxes and introduce irregular behaviour to each level. 
 
 Information from : https://en.wikipedia.org/wiki/Sokoban
