@@ -19,56 +19,56 @@ Welcome to Pythoban! Our game is designed to be a fun problem-solving challenge 
 
 # Requirements
 
-Python 3.0
+Python 3.0 <br>
 Pygame 2.0
 
 # Instructions for installation
 
-1. Clone this repository
-   git clone <enter url for our repo>
-   cd pythoban 
+1. Clone this repository <br>
+   git clone <enter url for our repo> <br>
+   cd pythoban <br>
    
-2. Install the required dependencies
+2. Install the required dependencies <br>
    
-   pip install -r requirements.txt
+   pip install -r requirements.txt  <br>
    
-3. Run the game
-   python main.py
+3. Run the game <br>
+   python main.py  <br>
    
-4. Testing 
+4. Testing  <br>
    
    
 
 # How to play
 
-The game starts at the main menu screen where the player can select the level.
-The player can move using the arrow keys : up, down, left and right
-The goal is to push the boxes into their corresponding goals/targets marked on the map. 
-The player can only push boxes, it cannot pull. 
-The score is tracked using the number of steps taken and time for each level. 
+The game starts at the main menu screen where the player can select the level. <br>
+The player can move using the arrow keys : up, down, left and right. <br>
+The goal is to push the boxes into their corresponding goals/targets marked on the map.  <br>
+The player can only push boxes, it cannot pull.  <br>
+The score is tracked using the number of steps taken and time for each level.  <br> <br>
 
-Each course is surrounded by and includes various wall items which cannot be pushed and act as boundaries. 
-There are obstacles on each level which result in irregular behaviour. 
-Magnet items will attach to boxes stopping them from moving unless the corresponding switch has been pressed down by a box. 
-Water items will make the game unsolvable if a box with a goal or player steps on it. Water can be climbed over if a box without a goal has been pushed in to act as a bridge. 
-Portal items allow the player and box to travel to the corresponding portal. 
-Hole items will make the game unsolvable if the player or box with a goal falls inside. Holes can be closed if a box without a goal is pushed inside it. 
+Each course is surrounded by and includes various wall items which cannot be pushed and act as boundaries.  <br>
+There are obstacles on each level which result in irregular behaviour.  <br>
+Magnet items will attach to boxes stopping them from moving unless the corresponding switch has been pressed down by a box.  <br>
+Water items will make the game unsolvable if a box with a goal or player steps on it. Water can be climbed over if a box without a goal has been pushed in to act as a bridge.  <br>
+Portal items allow the player and box to travel to the corresponding portal.  <br>
+Hole items will make the game unsolvable if the player or box with a goal falls inside. Holes can be closed if a box without a goal is pushed inside it.  <br> <br>
 
 
 # Screenshots
 
 # License
-This project is licensed under the MIT License 
+This project is licensed under the MIT License  <br>
 
 # Authors
-Katerina Itopoulos
-Juan Méndez Nogales
-David Rodrigues
+Katerina Itopoulos  <br>
+Juan Méndez Nogales  <br>
+David Rodrigues <br>
 
 # References
 
-https://en.wikipedia.org/wiki/Sokoban
-https://en.wikipedia.org/wiki/Baba_Is_You
-https://www.sokobanonline.com/help/how-to-play
+https://en.wikipedia.org/wiki/Sokoban <br>
+https://en.wikipedia.org/wiki/Baba_Is_You  <br>
+https://www.sokobanonline.com/help/how-to-play  <br>
 
 
