@@ -78,7 +78,7 @@ In our pythoban game, each level contains a different map with a variety of item
 | Portal                 |    X    |
 | Magnet                 |    M    |
 | Magnet Switch          |    S    |
-| ---------------------- | ------- |
+
 
 
 # Screenshots
