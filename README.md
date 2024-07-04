@@ -84,9 +84,9 @@ In our pythoban game, each level contains a different map with a variety of item
 # Screenshots
 
 # License
-(c) 2024 Katerina Itopoulos, Juan Méndez Nogales and David Rodrigues
-The Python code for this project is distributed under the conditions of the MIT License.  <br> See `LICENSE.TXT` for details. ,be.
-The graphics are taken from .... . See `ART_LICENSE>TXT` for a list of the authors. 
+(c) 2024 Katerina Itopoulos, Juan Méndez Nogales and David Rodrigues. <br>
+The Python code for this project is distributed under the conditions of the MIT License. See `LICENSE.TXT` for details. <br>
+The graphics are taken from .... . See `ART_LICENSE.TXT` for a list of the authors. 
 
 # Authors
 Katerina Itopoulos  <br>
