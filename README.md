@@ -55,17 +55,38 @@ Portal items allow the player and box to travel to the corresponding portal.  <b
 Hole items will make the game unsolvable if the player or box with a goal falls inside. Holes can be closed if a box without a goal is pushed inside it.  <br> <br>
 
 ## Levels
-| Item    | Symbol  |
-| ------- | ------- |
+In our pythoban game, each level contains a different map with a variety of items with corresponding symbols represented in the table below, the goal is for the player to move all Boxes with goals into their goal positions. Each level is represented by a text file and converted into the graphics using this. 
 
-
-
+| Item                   | Symbol  |
+| ---------------------- | ------- |
+| Box with Goal          |    B    |
+| Goal                   |    G    |
+| Box on its Goal        |    *    |
+| Box on another Goal    |    &    |
+| Wall                   |    W    |
+| Player                 |    P    |
+| Player on Goal         |    .    |
+| Floor                  |  Space  |
+| Box without Goal       |    b    |
+| Water                  |    ~    |
+| Box with Goal in Water |    d    |
+| Box over water         |    #    |
+| Player in Water        |    d    |
+| Hole                   |    0    |
+| Player in Hole         |    d    |
+| Box over Hole          |  Space  |
+| Portal                 |    X    |
+| Magnet                 |    M    |
+| Magnet Switch          |    S    |
+| ---------------------- | ------- |
 
 
 # Screenshots
 
 # License
-This project is licensed under the MIT License  <br>
+(c) 2024 Katerina Itopoulos, Juan Méndez Nogales and David Rodrigues
+The Python code for this project is distributed under the conditions of the MIT License.  <br> See `LICENSE.TXT` for details. ,be.
+The graphics are taken from .... . See `ART_LICENSE>TXT` for a list of the authors. 
 
 # Authors
 Katerina Itopoulos  <br>
