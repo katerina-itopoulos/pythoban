@@ -54,6 +54,13 @@ Water items will make the game unsolvable if a box with a goal or player steps o
 Portal items allow the player and box to travel to the corresponding portal.  <br>
 Hole items will make the game unsolvable if the player or box with a goal falls inside. Holes can be closed if a box without a goal is pushed inside it.  <br> <br>
 
+## Levels
+| Item    | Symbol  |
+| ------- | ------- |
+
+
+
+
 
 # Screenshots
 
