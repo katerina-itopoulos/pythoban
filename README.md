@@ -24,16 +24,16 @@ Pygame 2.0
 
 # Instructions for installation
 
-1. Clone this repository <br>
-   git clone <enter url for our repo> <br>
-   cd pythoban <br>
+1. Clone this repository <be>
+   `git clone <enter url for our repo>` <br>
+   `cd pythoban` <br>
    
 2. Install the required dependencies <br>
    
-   pip install -r requirements.txt  <br>
+   `pip install -r requirements.txt ` <br>
    
 3. Run the game <br>
-   python main.py  <br>
+   `python main.py`  <br>
    
 4. Testing  <br>
    
