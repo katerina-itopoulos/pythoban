@@ -90,6 +90,3 @@ class Level(BaseModel):
     map : Map 
     score : Score
     flag_path : str
-
-class Game(BaseModel):
-    level: int 
