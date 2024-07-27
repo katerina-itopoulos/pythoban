@@ -2,25 +2,11 @@
 Pythoban Game Logic 
 """
 import pygame
-from typing import Any
+from typing import Any, Type
 from pydantic import BaseModel, Field
 from os import listdir
 from os.path import isfile, join
-
-class Map(BaseModel):
-    matrix: list[str]
-class Level(BaseModel):
-    score: int = 0
-    map: Map
-    @classmethod
-    def load_from_file(cls, path) -> "Level":
-        with open(path, "r") as file:
-            map = Map(matrix=file.readlines())
-            level = Level(map=map)
-            return level
-
-
-        
+from model import Level, Box, Wall, Floor, Goal, Player
 
 class Game(BaseModel):
     level: int = 0 # 0 Is main menu, -1 is choosing level
@@ -33,19 +19,26 @@ class Game(BaseModel):
     levels_directory: str = 'levels'
     loaded_levels: list = []
     _fontPath: str = 'fonts/minecraft.ttf'
-    _background_path: str = 'images/background.png'
     _background_image: pygame.Surface | None = None
-    _selected_option_color = 'green'
-    _unselected_option_color = 'white'
+    _background_path: str = 'images/background.png'
+
+    _music_path: str = 'audio/awesomeness.wav'
+    _music_volume: float = 0.25
 
     # Main Menu
+    _selected_option_color = 'green'
+    _unselected_option_color = 'white'
+    
     selected_option_main_menu: int = "newGame"
     title_text: str = "Pythoban"
-    texts: dict[str,str] = {
+    texts: dict[str, str] = {
         "newGame": "New Game",
         "chooseLevel": "Choose Level",
         "quitGame": "Quit Game"
     }
+
+    item_images: dict[Type, Any] = {}
+    _available_items = [Box]
 
     # Choose Level
     selected_level: int = 0
@@ -53,6 +46,14 @@ class Game(BaseModel):
     def load_levels(self):
         levels_files_paths =  [join(self.levels_directory, file) for file in listdir(self.levels_directory) if isfile(join(self.levels_directory, file))]
         self.loaded_levels = [Level.load_from_file(level_file) for level_file in levels_files_paths]
+
+    def load_item_images(self):
+        items = [Box, Floor, Wall, Goal, Player]
+        for i in items:
+            image = pygame.image.load(i.image_path)
+            semiTransparentImage = image.copy()
+            semiTransparentImage.set_alpha(31)
+            self.item_images[i] = (image, semiTransparentImage)
 
     def show_main_menu(self):
         size = self.text_size
@@ -99,13 +100,47 @@ class Game(BaseModel):
         text_surface = font.render(f'Level {self.level}', True, self._unselected_option_color)
         text_rect = text_surface.get_rect(center=(self.screen_width / 2, (self.screen_height / 2) - (4 * text_surface.get_height())))
         self.screen.blit(text_surface, text_rect)
-        pass
+
+        level = self.loaded_levels[self.level - 1] # level 0 is main menu
+        x_offset = 56
+        y_offset = 32
+        top = (self.screen_height // 4) - y_offset
+        left = (self.screen_width // 2) - x_offset
+
+        # Floor first
+        for i, row in enumerate(level.map.matrix):
+            for j, column in enumerate(row):
+                classToDraw = type(column)
+                imageToDraw =  self.item_images[Goal][0] if classToDraw in [Goal] else self.item_images[Floor][0]
+                self.screen.blit(imageToDraw, (left + (j * x_offset) - (i * x_offset), top + (i * y_offset) + (j * y_offset)))
+        
+        top_offset = 64
+        top = (self.screen_height // 4) - y_offset - top_offset
+        left = (self.screen_width // 2) - x_offset
+
+        # Items next
+        for i, row in enumerate(level.map.matrix):
+            for j, column in enumerate(row):
+                classToDraw = type(column)
+                shouldBeTransparent = False
+                if(classToDraw != Player):
+                    for m in range(i):
+                        for n in range(j):
+                            print(type(level.map.matrix[m][n]))
+                            if type(level.map.matrix[m][n]) not in [Floor, Wall]:
+                                shouldBeTransparent = True
+                                break
+                        if(shouldBeTransparent): break
+
+                imageToDraw = self.item_images[classToDraw][1] if shouldBeTransparent else self.item_images[classToDraw][0]
+                if(classToDraw in [Wall, Box, Player]):
+                    self.screen.blit(imageToDraw, (left + (j * x_offset) - (i * x_offset), top + (i * y_offset) + (j * y_offset)))
 
     def process_events(self):
         # poll for events
         # pygame.QUIT event means the user clicked X to close your window
         for event in pygame.event.get():
-            if event.type == pygame.QUIT:
+            if event.type == pygame.QUIT or (event.type == pygame.KEYDOWN and pygame.key.get_pressed()[pygame.K_q]):
                 self.running = False
             if self.level == 0:
                 textKeys = list(self.texts.keys())
@@ -148,17 +183,26 @@ class Game(BaseModel):
         # flip() the display to put your work on screen
         pygame.display.flip()
         self.clock.tick(60)  # limits FPS to 60
-    
+
+    def init_game(self):
+        self.init_pygame()
+        self.play_music()
+        self.load_levels()
+        self.load_item_images()
+
     def init_pygame(self):
         pygame.init()
         self.screen = pygame.display.set_mode((self.screen_width, self.screen_height))
         self.clock = pygame.time.Clock()
         self._background_image = pygame.transform.scale(pygame.image.load(self._background_path), (self.screen_width, self.screen_height))
-
-
+        pygame.mixer.music.load(self._music_path)
+        pygame.mixer.music.set_volume(self._music_volume)
+    
+    def play_music(self):
+        pygame.mixer.music.play(loops=-1)
+    
     def run(self):
-        self.init_pygame()
-        self.load_levels()
+        self.init_game()
         while self.running:
             self.process_events()
             self.clean_screen()
