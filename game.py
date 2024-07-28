@@ -2,7 +2,7 @@
 Pythoban Game Logic 
 """
 import pygame
-from datetime import datetime
+from datetime import datetime, timedelta
 from typing import Any, Type
 from pydantic import BaseModel, Field
 from os import listdir
@@ -120,16 +120,16 @@ class Game(BaseModel):
         # Score
         # Time
         scoreFont = pygame.font.Font(self._fontPath, size // 2)
-        passed_time = datetime.now() - self._level_start_time
+        passed_time = timedelta(seconds=self.loaded_levels[self._current_level_index - 1].score.time)
         passed_time_text = self.duration_to_str(passed_time)
         
         passed_time_text_surface = scoreFont.render(f'Time: {passed_time_text}', True, self._unselected_option_color)
-        passed_time_text_rect = passed_time_text_surface.get_rect(center=(self.screen_width // 2, self.screen_height // 20))
+        passed_time_text_rect = passed_time_text_surface.get_rect(center=(self.screen_width // 2, (self.screen_height / 2) - (3 * text_surface.get_height())))
         self.screen.blit(passed_time_text_surface, passed_time_text_rect)
 
         # Steps
         steps_text_surface = scoreFont.render(f'Steps: {self._level_steps}', True, self._unselected_option_color)
-        steps_time_text_rect = steps_text_surface.get_rect(center=(self.screen_width // 2, self.screen_height * 2 // 20))
+        steps_time_text_rect = steps_text_surface.get_rect(center=(self.screen_width // 2, (self.screen_height / 2) - (2 * text_surface.get_height())))
         self.screen.blit(steps_text_surface, steps_time_text_rect)
         
         # Levels
