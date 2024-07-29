@@ -8,16 +8,8 @@ from typing import Any, Type, ClassVar
 from pydantic import BaseModel, Field
 from os import listdir
 from os.path import isfile, join
-from model import (
-    Level,
-    Box,
-    Wall,
-    Floor,
-    Goal,
-    Player,
-    HorizontalDirectionEnum,
-    VerticalDirectionEnum,
-)
+from model import Level,Box,Wall,Floor,Goal,Player,HorizontalDirectionEnum,VerticalDirectionEnum
+
 
 
 class Game(BaseModel):
@@ -330,128 +322,6 @@ class Game(BaseModel):
         fullDuration = str(duration)
         return fullDuration.split(".")[0]
 
-    # Not in use
-    def draw_level_3d(self):
-        size = self.text_size
-        font = pygame.font.Font(self._fontPath, size)
-
-        # Title
-        text_surface = font.render(
-            f"Level {self._current_level_index}", True, self._unselected_option_color
-        )
-        text_rect = text_surface.get_rect(
-            center=(
-                self.screen_width / 2,
-                (self.screen_height / 2) - (4 * text_surface.get_height()),
-            )
-        )
-        self.screen.blit(text_surface, text_rect)
-
-        # Score
-        # Time
-        scoreFont = pygame.font.Font(self._fontPath, size // 2)
-        passed_time = datetime.now() - self._level_start_time
-        passed_time_text = self.duration_to_str(passed_time)
-
-        passed_time_text_surface = scoreFont.render(
-            f"Time: {passed_time_text}", True, self._unselected_option_color
-        )
-        passed_time_text_rect = passed_time_text_surface.get_rect(
-            topleft=(self.screen_width // 40, self.screen_height // 20)
-        )
-        self.screen.blit(passed_time_text_surface, passed_time_text_rect)
-
-        # Steps
-        steps_text_surface = scoreFont.render(
-            f"Steps: {self._level_steps}", True, self._unselected_option_color
-        )
-        steps_time_text_rect = steps_text_surface.get_rect(
-            topleft=(self.screen_width // 40, self.screen_height * 2 // 20)
-        )
-        self.screen.blit(steps_text_surface, steps_time_text_rect)
-
-        x_offset = 56
-        y_offset = 32
-        top = (self.screen_height // 4) - y_offset
-        left = (self.screen_width // 2) - x_offset
-
-        # Floor first
-        for i, row in enumerate(self._current_level.map.matrix):
-            for j, column in enumerate(row):
-                classToDraw = type(column[0])
-                imageToDraw = (
-                    self.item_images[Goal][0]
-                    if classToDraw == Goal
-                    else self.item_images[Floor][0]
-                )
-                self.screen.blit(
-                    imageToDraw,
-                    (
-                        left + (j * x_offset) - (i * x_offset),
-                        top + (i * y_offset) + (j * y_offset),
-                    ),
-                )
-
-        top_offset = 64
-        top = (self.screen_height // 4) - y_offset - top_offset
-        left = (self.screen_width // 2) - x_offset
-
-        # Items next
-        transparentPositionsPlayer = []
-        for i, row in enumerate(self._current_level.map.matrix):
-            for j, column in enumerate(row):
-                classToDraw = type(column[1])
-                if classToDraw != type(None):
-                    # shouldBeTransparent = False
-                    imageToDraw = None
-                    if (
-                        (
-                            i == self._player.position.y + 1
-                            and j == self._player.position.x
-                        )
-                        or (
-                            i == self._player.position.y
-                            and j == self._player.position.x + 1
-                        )
-                        or (
-                            i == self._player.position.y + 1
-                            and j == self._player.position.x + 1
-                        )
-                        or (
-                            i > 0
-                            and j > 0
-                            and {
-                                type(item)
-                                for item in self._current_level.map.matrix[i - 1][j - 1]
-                            }.intersection({Goal, Box})
-                        )
-                    ):
-                        # print('transparent image around player or important object', j, i, self._player.position)
-                        imageToDraw = self.item_images[classToDraw][-1]
-                        transparentPositionsPlayer.append((j, i))
-
-                    # if(classToDraw != Player):
-                    #     for m in range(i):
-                    #         for n in range(j):
-                    #             # print(type(level.map.matrix[m][n]))
-                    #             if type(level.map.matrix[m][n]) not in [Floor, Wall]:
-                    #                 imageToDraw = self.item_images[classToDraw][-3]
-                    #                 break
-                    #         if(imageToDraw): break
-                    # print("column", column)
-                    # print("classToDraw", classToDraw)
-                    if not imageToDraw:
-                        imageToDraw = self.item_images[classToDraw][0]
-                    # imageToDraw = self.item_images[classToDraw][1] if shouldBeTransparent else self.item_images[classToDraw][0]
-                    # if(classToDraw in [Wall, Box, Player]):
-                    self.screen.blit(
-                        imageToDraw,
-                        (
-                            left + (j * x_offset) - (i * x_offset),
-                            top + (i * y_offset) + (j * y_offset),
-                        ),
-                    )
-        # if(transparentPositionsPlayer): print(transparentPositionsPlayer)
 
     def draw_level_text(self):
         size = self.text_size

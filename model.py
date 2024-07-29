@@ -33,6 +33,7 @@ class AbstractItem(BaseModel):
     """
     Abstract base class for items in Pythoban
     """
+<<<<<<< Updated upstream
 
     position: Position
     image_path: str
@@ -54,6 +55,12 @@ class AbstractItem(BaseModel):
 #     color : str
 
 
+=======
+    position : Position
+    image_path : str
+    symbol : str
+  
+>>>>>>> Stashed changes
 class Box(AbstractItem):
     position: Position
     image_path: ClassVar[str] = (
