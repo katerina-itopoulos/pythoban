@@ -1,7 +1,7 @@
 
 import json
 from pydantic import BaseModel, Field
-from enum import Enum
+from enum import Enum,ReprEnum
 from typing import List,Union,ClassVar
 
 
@@ -13,11 +13,11 @@ class Score(BaseModel):
     time : int #secs
     steps : int 
 
-class HorizontalDirectionEnum(str, Enum):
+class HorizontalDirectionEnum(str, ReprEnum):
     left = 'left'
     right = 'right'
 
-class VerticalDirectionEnum(str, Enum):
+class VerticalDirectionEnum(str,ReprEnum):
     up = 'up'
     down = 'down'
     
