@@ -3,7 +3,7 @@ Pythoban Game Logic
 """
 import pygame
 from datetime import datetime, timedelta
-from typing import Any, Type
+from typing import Any, Type,ClassVar
 from pydantic import BaseModel, Field
 from os import listdir
 from os.path import isfile, join
@@ -27,6 +27,13 @@ class Game(BaseModel):
 
     _music_path: str = 'audio/awesomeness.wav'
     _music_volume: float = 0.25
+
+    #restart image relative path
+    BUTTON_IMAGE_PATH: ClassVar[str] = 'images/restart/restart.png'
+
+    restart_button_image: pygame.Surface | None = None
+    restart_button_rect: pygame.Rect | None = None
+
 
     # Main Menu
     _selected_option_color = 'green'
@@ -52,7 +59,14 @@ class Game(BaseModel):
     _level_steps: int = 0
     _has_won: bool = False
     
+    class Config:
+        arbitrary_types_allowed = True
 
+    def __init__(self, **data):
+        super().__init__(**data)
+        self.text_size = self.screen_height // 10
+
+        
     def save_score(self):
         new_time_in_seconds = int((datetime.now() - self._level_start_time).total_seconds())
         new_steps = self._level_steps
@@ -64,15 +78,25 @@ class Game(BaseModel):
         self.loaded_levels = [Level.load_from_file(level_file) for level_file in levels_files_paths]
         #print([l.file_path for l in self.loaded_levels])
 
-    def load_item_images(self):
-        items = [Box, Floor, Wall, Goal, Player]
-        for i in items:
-            image = pygame.image.load(i.image_path)
-            numberOfImages = 4
-            self.item_images[i] = [image.copy() for _ in range(numberOfImages)]
-            for index, image in enumerate(self.item_images[i]):
-                image.set_alpha(int(255 * (1 - (index / numberOfImages))))
 
+    def load_item_images(self):
+            items = [Box, Floor, Wall, Goal, Player]
+            for i in items:
+                image = pygame.image.load(i.image_path)
+                numberOfImages = 4
+                self.item_images[i] = [image.copy() for _ in range(numberOfImages)]
+                for index, image in enumerate(self.item_images[i]):
+                    image.set_alpha(int(255 * (1 - (index / numberOfImages))))
+
+    def load_images(self):
+        # Load item images
+        self.load_item_images()
+        
+        # Load restart button image
+        self.restart_button_image = pygame.image.load(self.BUTTON_IMAGE_PATH)
+        if self.restart_button_image:
+            self.restart_button_rect = self.restart_button_image.get_rect(topleft=(self.screen_width // 40, self.screen_height * 3 // 20))
+            
     def show_main_menu(self):
         size = self.text_size
         font = pygame.font.Font(self._fontPath, size)
@@ -146,6 +170,9 @@ class Game(BaseModel):
         text_surface = font.render(f'< Go back to main menu', True, self._selected_option_color if self.selected_level == 0 else self._unselected_option_color)
         text_rect = text_surface.get_rect(center=(self.screen_width / 2, (self.screen_height / 2) + (len(self.loaded_levels) * text_surface.get_height())))
         self.screen.blit(text_surface, text_rect)
+
+        # Draw restart button
+        self.screen.blit(self.restart_button_image, self.restart_button_rect)
 
     def duration_to_str(self,duration):
         fullDuration = str(duration)
@@ -268,6 +295,8 @@ class Game(BaseModel):
         
         # Now into the actual screen
         self.screen.blit(main_surface, main_surface_rect)
+        # Draw restart button
+        self.screen.blit(self.restart_button_image, self.restart_button_rect)
 
     def process_global_events(self, event):
         if event.type == pygame.QUIT:
@@ -321,9 +350,12 @@ class Game(BaseModel):
                 self.start_level()
 
     def process_level_events(self, event):
-        if event.type == pygame.KEYDOWN:
+        if event.type == pygame.QUIT:
+            self.running = False
+        elif event.type == pygame.KEYDOWN:
             keys = pygame.key.get_pressed()
             player_next_position = None
+            
             if keys[pygame.K_DOWN]:
                 player_next_position = (self._player.position.x, self._player.position.y + 1)
             elif keys[pygame.K_UP]:
@@ -332,72 +364,67 @@ class Game(BaseModel):
                 player_next_position = (self._player.position.x - 1, self._player.position.y)
             elif keys[pygame.K_RIGHT]:
                 player_next_position = (self._player.position.x + 1, self._player.position.y)
-            #if(player_next_position):
-                #print('player_next_position', player_next_position)
-                #print(player_next_position[1] < len(self._current_level.map.matrix), player_next_position[1] >= 0, player_next_position[0] < len(self._current_level.map.matrix[0]), player_next_position[0] >= 0)
+            
             # If valid player_next_position
-            if(player_next_position != None 
-               and player_next_position[1] < len(self._current_level.map.matrix) 
-               and player_next_position[1] >= 0
-               and player_next_position[0] < len(self._current_level.map.matrix[0])
-               and player_next_position[0] >= 0):
+            if player_next_position is not None and self._is_valid_position(player_next_position):
                 player_next_cell = self._current_level.map.matrix[player_next_position[1]][player_next_position[0]][1]
-                #print('player_next_cell', player_next_cell)
-                if(type(player_next_cell) == type(None)):
-                    # Remove player from current position
-                    self._current_level.map.matrix[self._player.position.y][self._player.position.x][1] = None
-
-                    # Add player to new position
-                    self._player.position.x = player_next_position[0]
-                    self._player.position.y = player_next_position[1]
-                    self._current_level.map.matrix[player_next_position[1]][player_next_position[0]][1] = self._player
-
+                
+                if player_next_cell is None:
+                    # Move player to new position
+                    self._move_player(player_next_position)
                     self._level_steps += 1
 
-                elif(type(player_next_cell) == Box):
-                    #print('Trying to move box')
-                    box_next_position = None
-                    if keys[pygame.K_DOWN]:
-                        box_next_position = (self._player.position.x, self._player.position.y + 2)
-                    elif keys[pygame.K_UP]:
-                        box_next_position = (self._player.position.x, self._player.position.y - 2)
-                    elif keys[pygame.K_LEFT]:
-                        box_next_position = (self._player.position.x - 2, self._player.position.y)
-                    elif keys[pygame.K_RIGHT]:
-                        box_next_position = (self._player.position.x + 2, self._player.position.y)
-                    #if(box_next_position):
-                        #print('box_next_position', box_next_position)
-                        #print(box_next_position[1] < len(self._current_level.map.matrix), box_next_position[1] >= 0, box_next_position[0] < len(self._current_level.map.matrix[0]), box_next_position[0] >= 0)
+                elif isinstance(player_next_cell, Box):
+                    box_next_position = self._get_box_next_position(keys)
                     
-                    # If valid box_next_position
-
-                    if(box_next_position != None 
-                       and box_next_position[1] < len(self._current_level.map.matrix) 
-                       and box_next_position[1] >= 0
-                       and box_next_position[0] < len(self._current_level.map.matrix[0])
-                       and box_next_position[0] >= 0):
+                    if box_next_position is not None and self._is_valid_position(box_next_position):
                         box_next_cell = self._current_level.map.matrix[box_next_position[1]][box_next_position[0]][1]
-                        #print(box_next_cell)
-                        box_to_move = player_next_cell
-                        if(type(box_next_cell) == type(None)):
-                            # Remove box from current position
-                            self._current_level.map.matrix[player_next_position[1]][player_next_position[0]][1] = None
-
-                            # Add box to new position
-                            box_to_move.position.x = box_next_position[0]
-                            box_to_move.position.y = box_next_position[1]
-                            self._current_level.map.matrix[box_next_position[1]][box_next_position[0]][1] = box_to_move
-
-                            # Remove player from current position
-                            self._current_level.map.matrix[self._player.position.y][self._player.position.x][1] = None
-
-                            # Add player to new position
-                            self._player.position.x = player_next_position[0]
-                            self._player.position.y = player_next_position[1]
-                            self._current_level.map.matrix[player_next_position[1]][player_next_position[0]][1] = self._player
-
+                        
+                        if box_next_cell is None:
+                            self._move_box_and_player(player_next_position, box_next_position)
                             self._level_steps += 1
                             self.check_if_won()
+
+        elif event.type == pygame.MOUSEBUTTONDOWN:
+            mouse_x, mouse_y = pygame.mouse.get_pos()
+            if self.restart_button_rect.collidepoint(mouse_x, mouse_y):
+                self.restart_level()  # Add this method to handle restarting the level
+
+    def _is_valid_position(self, position):
+        return (0 <= position[1] < len(self._current_level.map.matrix) and
+                0 <= position[0] < len(self._current_level.map.matrix[0]))
+
+    def _get_box_next_position(self, keys):
+        if keys[pygame.K_DOWN]:
+            return (self._player.position.x, self._player.position.y + 2)
+        elif keys[pygame.K_UP]:
+            return (self._player.position.x, self._player.position.y - 2)
+        elif keys[pygame.K_LEFT]:
+            return (self._player.position.x - 2, self._player.position.y)
+        elif keys[pygame.K_RIGHT]:
+            return (self._player.position.x + 2, self._player.position.y)
+        return None
+
+    def _move_player(self, position):
+        # Remove player from current position
+        self._current_level.map.matrix[self._player.position.y][self._player.position.x][1] = None
+
+        # Move player to new position
+        self._player.position.x, self._player.position.y = position
+        self._current_level.map.matrix[position[1]][position[0]][1] = self._player
+
+    def _move_box_and_player(self, player_position, box_position):
+        # Remove box from current position
+        box = self._current_level.map.matrix[player_position[1]][player_position[0]][1]
+        self._current_level.map.matrix[player_position[1]][player_position[0]][1] = None
+
+        # Move box to new position
+        box.position.x, box.position.y = box_position
+        self._current_level.map.matrix[box_position[1]][box_position[0]][1] = box
+
+        # Move player to new position
+        self._move_player(player_position)
+        
 
     def process_events(self):
         # poll for events
@@ -444,7 +471,10 @@ class Game(BaseModel):
         if(self._has_won):
             self.selected_level = self._current_level_index + 1 if self._current_level_index + 1 < len(self.loaded_levels) else 0
             self.save_score()
-    
+
+    def restart_level(self):
+        self.start_level() 
+
     def clean_screen(self):
         # fill the screen with a color to wipe away anything from last frame
         self.screen.blit(self._background_image, (0, 0))
@@ -458,7 +488,7 @@ class Game(BaseModel):
         self.init_pygame()
         self.play_music()
         self.load_levels()
-        self.load_item_images()
+        self.load_images()
 
     def init_pygame(self):
         pygame.init()
