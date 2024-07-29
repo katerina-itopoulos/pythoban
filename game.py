@@ -171,8 +171,7 @@ class Game(BaseModel):
         text_rect = text_surface.get_rect(center=(self.screen_width / 2, (self.screen_height / 2) + (len(self.loaded_levels) * text_surface.get_height())))
         self.screen.blit(text_surface, text_rect)
 
-        # Draw restart button
-        self.screen.blit(self.restart_button_image, self.restart_button_rect)
+        
 
     def duration_to_str(self,duration):
         fullDuration = str(duration)
