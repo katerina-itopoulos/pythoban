@@ -19,7 +19,7 @@ Welcome to Pythoban! Our game is designed to be a fun problem-solving challenge 
 
 # Requirements
 
-Python 3.0 <br>
+Python 3.11 <br>
 Pygame 2.0
 
 # Instructions for installation
@@ -65,20 +65,7 @@ In our pythoban game, each level contains a different map with a variety of item
 | Box on another Goal    |    &    |
 | Wall                   |    W    |
 | Player                 |    P    |
-| Player on Goal         |    .    |
 | Floor                  |  Space  |
-| Box without Goal       |    b    |
-| Water                  |    ~    |
-| Box with Goal in Water |    d    |
-| Box over water         |    #    |
-| Player in Water        |    d    |
-| Hole                   |    0    |
-| Player in Hole         |    d    |
-| Box over Hole          |  Space  |
-| Portal                 |    X    |
-| Magnet                 |    M    |
-| Magnet Switch          |    S    |
-
 
 
 # Screenshots
