@@ -7,7 +7,7 @@ from typing import Any, Type,ClassVar
 from pydantic import BaseModel, Field
 from os import listdir
 from os.path import isfile, join
-from model import Level, Box, Wall, Floor, Goal, Player
+from model import Level, Box, Wall, Floor, Goal, Player, HorizontalDirectionEnum, VerticalDirectionEnum
 
 class Game(BaseModel):
     _current_level_index: int = 0 # 0 Is main menu, -1 is choosing level
@@ -72,8 +72,11 @@ class Game(BaseModel):
         new_steps = self._level_steps
         self.loaded_levels[self._current_level_index - 1].update_score(new_time_in_seconds, new_steps)
 
+    def get_file_paths_in_dir(self, directory):
+        return [join(directory, file) for file in listdir(directory) if isfile(join(directory, file))]
+
     def load_levels(self):
-        levels_files_paths =  [join(self.levels_directory, file) for file in listdir(self.levels_directory) if isfile(join(self.levels_directory, file))]
+        levels_files_paths =  self.get_file_paths_in_dir(self.levels_directory)
         levels_files_paths.sort()
         self.loaded_levels = [Level.load_from_file(level_file) for level_file in levels_files_paths]
         #print([l.file_path for l in self.loaded_levels])
@@ -82,11 +85,20 @@ class Game(BaseModel):
     def load_item_images(self):
             items = [Box, Floor, Wall, Goal, Player]
             for i in items:
-                image = pygame.image.load(i.image_path)
-                numberOfImages = 4
-                self.item_images[i] = [image.copy() for _ in range(numberOfImages)]
-                for index, image in enumerate(self.item_images[i]):
-                    image.set_alpha(int(255 * (1 - (index / numberOfImages))))
+                if(i == Player):
+                    player_images_dict = {}
+                    for vertical_direction in VerticalDirectionEnum:
+                        player_images_dict[vertical_direction] = {}
+                        for horizontal_direction in HorizontalDirectionEnum:
+                            path = join(i.image_path, f'{vertical_direction}_{horizontal_direction}.png')
+                            player_images_dict[vertical_direction][horizontal_direction] = pygame.image.load(path)
+                    self.item_images[i] = player_images_dict
+                else:
+                    image = pygame.image.load(i.image_path)
+                    numberOfImages = 4
+                    self.item_images[i] = [image.copy() for _ in range(numberOfImages)]
+                    for index, image in enumerate(self.item_images[i]):
+                        image.set_alpha(int(255 * (1 - (index / numberOfImages))))
 
     def load_images(self):
         # Load item images
@@ -251,7 +263,7 @@ class Game(BaseModel):
                     self.screen.blit(imageToDraw, (left + (j * x_offset) - (i * x_offset), top + (i * y_offset) + (j * y_offset)))
         # if(transparentPositionsPlayer): print(transparentPositionsPlayer)
 
-    def draw_level(self):
+    def draw_level_text(self):
         size = self.text_size
         font = pygame.font.Font(self._fontPath, size)
         
@@ -274,14 +286,17 @@ class Game(BaseModel):
         steps_text_surface = scoreFont.render(f'Steps: {self._level_steps}', True, self._unselected_option_color)
         steps_time_text_rect = steps_text_surface.get_rect(topleft=(self.screen_width // 40, self.screen_height * 2 // 20))
         self.screen.blit(steps_text_surface, steps_time_text_rect)
-
+    
+    def draw_level(self):
+        self.draw_level_text()
+        self.draw_level_items()
+    
+    def draw_level_items(self):
         x_offset = 64
         y_offset = 64
         main_surface_size = (len(self._current_level.map.matrix[0]) * x_offset, len(self._current_level.map.matrix) * y_offset)
-
         main_surface = pygame.Surface(main_surface_size)
         main_surface.fill('black')
-        main_surface_rect = main_surface.get_rect(center=(self.screen_width // 2, self.screen_height // 2))
         
         # Items next
         for i, row in enumerate(self._current_level.map.matrix):
@@ -289,9 +304,19 @@ class Game(BaseModel):
                 for k, cell in enumerate(column):
                     classToDraw = type(cell)
                     if(classToDraw != type(None)):
-                        imageToDraw = self.item_images[classToDraw][0]
+                        if(classToDraw == Player):
+                            # print(self._player.last_vertical_direction, self._player.last_horizontal_direction)
+                            imageToDraw = self.item_images[classToDraw][self._player.last_vertical_direction][self._player.last_horizontal_direction]
+                        else:
+                            imageToDraw = self.item_images[classToDraw][0]
                         main_surface.blit(imageToDraw, (j * x_offset, i * y_offset))
-        
+
+        # In case the level doesn't fit on the screen, define maximum values
+        scale_factor = 0.7
+        scaled_main_surface_size = (min(int(self.screen_width * scale_factor), main_surface.get_width()), min(int(self.screen_height * scale_factor), main_surface.get_height()))
+        main_surface = pygame.transform.scale(main_surface, scaled_main_surface_size)
+        main_surface_rect = main_surface.get_rect(center=(self.screen_width // 2, self.screen_height // 2))
+
         # Now into the actual screen
         self.screen.blit(main_surface, main_surface_rect)
         # Draw restart button
@@ -357,12 +382,16 @@ class Game(BaseModel):
             
             if keys[pygame.K_DOWN]:
                 player_next_position = (self._player.position.x, self._player.position.y + 1)
+                self._player.last_vertical_direction = VerticalDirectionEnum.down
             elif keys[pygame.K_UP]:
                 player_next_position = (self._player.position.x, self._player.position.y - 1)
+                self._player.last_vertical_direction = VerticalDirectionEnum.up
             elif keys[pygame.K_LEFT]:
                 player_next_position = (self._player.position.x - 1, self._player.position.y)
+                self._player.last_horizontal_direction = HorizontalDirectionEnum.left
             elif keys[pygame.K_RIGHT]:
                 player_next_position = (self._player.position.x + 1, self._player.position.y)
+                self._player.last_horizontal_direction = HorizontalDirectionEnum.right
             
             # If valid player_next_position
             if player_next_position is not None and self._is_valid_position(player_next_position):

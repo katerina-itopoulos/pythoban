@@ -1,6 +1,7 @@
 
 import json
 from pydantic import BaseModel, Field
+from enum import Enum
 from typing import List,Union,ClassVar
 
 
@@ -12,11 +13,19 @@ class Score(BaseModel):
     time : int #secs
     steps : int 
 
+class HorizontalDirectionEnum(str, Enum):
+    left = 'left'
+    right = 'right'
+
+class VerticalDirectionEnum(str, Enum):
+    up = 'up'
+    down = 'down'
     
 class Player(BaseModel):
     position : Position 
-    push : bool = True
-    image_path : ClassVar[str] = 'images/kenney_sokobanPack/PNG/Default size/Player/player_05.png'
+    last_vertical_direction : VerticalDirectionEnum = VerticalDirectionEnum.down
+    last_horizontal_direction : HorizontalDirectionEnum = HorizontalDirectionEnum.right
+    image_path : ClassVar[str] = 'images/Player'
 
 class AbstractItem(BaseModel):
     """ 
