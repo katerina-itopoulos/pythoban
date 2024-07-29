@@ -33,34 +33,10 @@ class AbstractItem(BaseModel):
     """
     Abstract base class for items in Pythoban
     """
-<<<<<<< Updated upstream
-
-    position: Position
-    image_path: str
-    symbol: str
-
-
-# class GoalBox(AbstractItem):
-#     position : Position
-#     image_path : str
-#     symbol : str
-#     color : str
-#     goal : Position
-
-# class Goal(AbstractItem):
-#     position : Position
-#     image_path : str
-#     symbol : str
-#     box : GoalBox
-#     color : str
-
-
-=======
     position : Position
     image_path : str
     symbol : str
   
->>>>>>> Stashed changes
 class Box(AbstractItem):
     position: Position
     image_path: ClassVar[str] = (
@@ -93,45 +69,6 @@ class Floor(AbstractItem):
         "images/kenney_sokobanPack/PNG/Default size/Ground/ground_06.png"
     )
     symbol: str = " "
-
-
-class Magnet(AbstractItem):
-    position: Position
-    image_path: str
-    symbol: str
-    direction: str
-
-
-class MagnetSwitch(AbstractItem):
-    position: Position
-    image_path: str
-    symbol: str
-    magnet: Magnet
-    on: bool = True
-
-
-class Water(AbstractItem):
-    position: Position
-    image_path: str
-    symbol: str
-    isFilled: bool = False
-
-
-class Portal(AbstractItem):
-    position: Position
-    image_path: str
-    symbol: str
-    twin: Position
-
-
-# maybe we could define two positions in the portal class? for each portal
-
-
-class Hole(AbstractItem):
-    position: Position
-    image_path: str
-    symbol: str
-    isFilled: bool = False
 
 
 class Map(BaseModel):
