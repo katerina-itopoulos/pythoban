@@ -16,7 +16,7 @@ class Score(BaseModel):
 class Player(BaseModel):
     position : Position 
     push : bool = True
-    image_path : ClassVar[str] = 'images/kenney_sokobanPack/PNG/Default size/Player/player_05.png'
+    image_path : ClassVar[str] = 'images/Isometric Blocks/PNG/Abstract tiles/abstractTile_24.png'
 
 class AbstractItem(BaseModel):
     """ 
@@ -43,24 +43,24 @@ class AbstractItem(BaseModel):
     
 class Box(AbstractItem):
     position : Position
-    image_path : ClassVar[str] = 'images/kenney_sokobanPack/PNG/Default size/Crates/crate_42.png'
+    image_path : ClassVar[str] = 'images/Isometric Blocks/PNG/Platformer tiles/platformerTile_23.png'
     symbol : str = 'B'
 
 class Goal(AbstractItem):
     position : Position
-    image_path : ClassVar[str] = 'images/kenney_sokobanPack/PNG/Default size/Environment/environment_04.png'
+    image_path : ClassVar[str] = 'images/Isometric Blocks/PNG/Platformer tiles/platformerTile_37_2.png'
     symbol : str = 'G'
     # box : Box
     # color : str
 
 class Wall(AbstractItem):
     position : Position
-    image_path : ClassVar[str] = 'images/kenney_sokobanPack/PNG/Default size/Blocks/block_04.png'
+    image_path : ClassVar[str] = 'images/Isometric Blocks/PNG/Platformer tiles/platformerTile_20.png'
     symbol : str = 'W'
 
 class Floor(AbstractItem):
     position : Position
-    image_path : ClassVar[str] = 'images/kenney_sokobanPack/PNG/Default size/Ground/ground_06.png'
+    image_path : ClassVar[str] = 'images/Isometric Blocks/PNG/Abstract tiles/abstractTile_01.png'
     symbol : str = ' '
    
 

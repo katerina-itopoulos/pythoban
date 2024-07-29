@@ -60,7 +60,9 @@ class Game(BaseModel):
 
     def load_levels(self):
         levels_files_paths =  [join(self.levels_directory, file) for file in listdir(self.levels_directory) if isfile(join(self.levels_directory, file))]
+        levels_files_paths.sort()
         self.loaded_levels = [Level.load_from_file(level_file) for level_file in levels_files_paths]
+        #print([l.file_path for l in self.loaded_levels])
 
     def load_item_images(self):
         items = [Box, Floor, Wall, Goal, Player]
@@ -149,7 +151,8 @@ class Game(BaseModel):
         fullDuration = str(duration)
         return fullDuration.split('.')[0]
 
-    def draw_level(self):
+    # Not in use
+    def draw_level_3d(self):
         size = self.text_size
         font = pygame.font.Font(self._fontPath, size)
         
@@ -222,6 +225,50 @@ class Game(BaseModel):
                     self.screen.blit(imageToDraw, (left + (j * x_offset) - (i * x_offset), top + (i * y_offset) + (j * y_offset)))
         # if(transparentPositionsPlayer): print(transparentPositionsPlayer)
 
+    def draw_level(self):
+        size = self.text_size
+        font = pygame.font.Font(self._fontPath, size)
+        
+        # Title
+        text_surface = font.render(f'Level {self._current_level_index}', True, self._unselected_option_color)
+        text_rect = text_surface.get_rect(center=(self.screen_width / 2, (self.screen_height / 2) - (4 * text_surface.get_height())))
+        self.screen.blit(text_surface, text_rect)
+
+        # Score
+        # Time
+        scoreFont = pygame.font.Font(self._fontPath, size // 2)
+        passed_time = datetime.now() - self._level_start_time
+        passed_time_text = self.duration_to_str(passed_time)
+        
+        passed_time_text_surface = scoreFont.render(f'Time: {passed_time_text}', True, self._unselected_option_color)
+        passed_time_text_rect = passed_time_text_surface.get_rect(topleft=(self.screen_width // 40, self.screen_height // 20))
+        self.screen.blit(passed_time_text_surface, passed_time_text_rect)
+
+        # Steps
+        steps_text_surface = scoreFont.render(f'Steps: {self._level_steps}', True, self._unselected_option_color)
+        steps_time_text_rect = steps_text_surface.get_rect(topleft=(self.screen_width // 40, self.screen_height * 2 // 20))
+        self.screen.blit(steps_text_surface, steps_time_text_rect)
+
+        x_offset = 64
+        y_offset = 64
+        main_surface_size = (len(self._current_level.map.matrix[0]) * x_offset, len(self._current_level.map.matrix) * y_offset)
+
+        main_surface = pygame.Surface(main_surface_size)
+        main_surface.fill('black')
+        main_surface_rect = main_surface.get_rect(center=(self.screen_width // 2, self.screen_height // 2))
+        
+        # Items next
+        for i, row in enumerate(self._current_level.map.matrix):
+            for j, column in enumerate(row):
+                for k, cell in enumerate(column):
+                    classToDraw = type(cell)
+                    if(classToDraw != type(None)):
+                        imageToDraw = self.item_images[classToDraw][0]
+                        main_surface.blit(imageToDraw, (j * x_offset, i * y_offset))
+        
+        # Now into the actual screen
+        self.screen.blit(main_surface, main_surface_rect)
+
     def process_global_events(self, event):
         if event.type == pygame.QUIT:
             self.running = False
@@ -270,7 +317,7 @@ class Game(BaseModel):
                     self.selected_level = 0 if self.selected_level == self._current_level_index + 1 else self._current_level_index + 1
                 elif keys[pygame.K_UP]:
                     self.selected_level = 0 if self.selected_level == self._current_level_index + 1 else self._current_level_index + 1
-            elif keys[pygame.K_RETURN]:
+            if keys[pygame.K_RETURN]:
                 self.start_level()
 
     def process_level_events(self, event):
