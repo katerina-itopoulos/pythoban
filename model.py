@@ -1,6 +1,6 @@
 import json
 from pydantic import BaseModel, Field
-from enum import Enum, ReprEnum
+from enum import Enum, ReprEnum,ReprEnum
 from typing import List, Union, ClassVar
 
 
@@ -15,15 +15,13 @@ class Score(BaseModel):
 
 
 class HorizontalDirectionEnum(str, ReprEnum):
-    left = "left"
-    right = "right"
+    left = 'left'
+    right = 'right'
 
-
-class VerticalDirectionEnum(str, ReprEnum):
-    up = "up"
-    down = "down"
-
-
+class VerticalDirectionEnum(str,ReprEnum):
+    up = 'up'
+    down = 'down'
+    
 class Player(BaseModel):
     position: Position
     last_vertical_direction: VerticalDirectionEnum = VerticalDirectionEnum.down

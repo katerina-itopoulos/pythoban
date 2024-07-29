@@ -18,7 +18,7 @@ Welcome to Pythoban! Our game is designed to be a fun problem-solving challenge 
 
 # Requirements
 
-Python 3.0 <br>
+Python 3.11 <br>
 Pygame 2.0
 
 # Instructions for installation
@@ -54,27 +54,15 @@ Hole items will make the game unsolvable if the player or box with a goal falls 
 
 In our pythoban game, each level contains a different map with a variety of items with corresponding symbols represented in the table below, the goal is for the player to move all Boxes with goals into their goal positions. Each level is represented by a text file and converted into the graphics using this.
 
-| Item                   | Symbol |
-| ---------------------- | ------ |
-| Box with Goal          | B      |
-| Goal                   | G      |
-| Box on its Goal        | \*     |
-| Box on another Goal    | &      |
-| Wall                   | W      |
-| Player                 | P      |
-| Player on Goal         | .      |
-| Floor                  | Space  |
-| Box without Goal       | b      |
-| Water                  | ~      |
-| Box with Goal in Water | d      |
-| Box over water         | #      |
-| Player in Water        | d      |
-| Hole                   | 0      |
-| Player in Hole         | d      |
-| Box over Hole          | Space  |
-| Portal                 | X      |
-| Magnet                 | M      |
-| Magnet Switch          | S      |
+| Item                | Symbol |
+| ------------------- | ------ |
+| Box with Goal       | B      |
+| Goal                | G      |
+| Box on its Goal     | \*     |
+| Box on another Goal | &      |
+| Wall                | W      |
+| Player              | P      |
+| Floor               | Space  |
 
 # Screenshots
 
