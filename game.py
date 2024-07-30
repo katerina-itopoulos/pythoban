@@ -202,7 +202,7 @@ class Game(BaseModel):
             text_rect = text_surface.get_rect(
                 center=(
                     self.screen_width / 2,
-                    (self.screen_height / 2) + (index * text_surface.get_height()),
+                    (self.screen_height / 3) + (index * text_surface.get_height()),
                 )
             )
             self.screen.blit(text_surface, text_rect)
@@ -221,7 +221,7 @@ class Game(BaseModel):
         text_rect = text_surface.get_rect(
             center=(
                 self.screen_width / 2,
-                (self.screen_height / 2)
+                (self.screen_height / 2.2)
                 + (len(self.loaded_levels) * text_surface.get_height()),
             )
         )
@@ -291,7 +291,7 @@ class Game(BaseModel):
             text_rect = text_surface.get_rect(
                 center=(
                     self.screen_width / 2,
-                    (self.screen_height / 2)
+                    (self.screen_height / 3.1)
                     + (self._current_level_index * text_surface.get_height()),
                 )
             )
@@ -311,7 +311,7 @@ class Game(BaseModel):
         text_rect = text_surface.get_rect(
             center=(
                 self.screen_width / 2,
-                (self.screen_height / 2)
+                (self.screen_height / 2.5)
                 + (len(self.loaded_levels) * text_surface.get_height()),
             )
         )
