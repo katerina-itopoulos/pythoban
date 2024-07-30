@@ -643,9 +643,9 @@ class Game(BaseModel):
 
     def init_game(self):
         self.init_pygame()
-        self.play_music()
         self.load_levels()
         self.load_images()
+        self.play_music()  # Call play_music after initializing the mixer and loading the music
 
     def init_pygame(self):
         pygame.init()
@@ -653,11 +653,13 @@ class Game(BaseModel):
         pygame.display.set_icon(pygame.image.load(self._icon_path))
         self.screen = pygame.display.set_mode((self.screen_width, self.screen_height))
         self.clock = pygame.time.Clock()
-        pygame.mixer.music.load(self._music_path)
-        pygame.mixer.music.set_volume(self._music_volume)
+        pygame.mixer.init()  # Initialize the mixer here
 
     def play_music(self):
-        pygame.mixer.music.play(loops=-1)
+        pygame.mixer.music.load(self._music_path)  # Load music after initializing the mixer
+        pygame.mixer.music.set_volume(self._music_volume)
+        pygame.mixer.music.play(loops=-1)  # Play music in the background
+
 
     def run(self):
         self.init_game()
