@@ -4,9 +4,10 @@ import json
 import tempfile
 import os
 from unittest.mock import patch
-from model import Level,Map,Player,Score,Position
+from model import Level, Map, Player, Score, Position
 from game import Game
 from pygame.locals import K_DOWN, K_UP, K_LEFT, K_RIGHT
+
 
 @pytest.fixture
 def setup_game():
@@ -27,20 +28,21 @@ def setup_game():
 
     return game
 
+
 @pytest.fixture
 def winning_game():
     pygame.init()
-    
+
     # Create a mock level with a winning map
     test_map = "WWW    \nWBWWWWW\nWBB    \nW    PW\nW    WW\nWWWWWW "
     mock_map = Map.from_string(test_map)
     mock_score = Score(time=0, steps=0)
-    
+
     # Use a temporary file to avoid writing to the actual file system
     temp_file = tempfile.NamedTemporaryFile(delete=False)
     temp_file.close()  # Close the file so it can be used by the game
     file_path = temp_file.name
-    
+
     level = Level(map=mock_map, score=mock_score, file_path=file_path)
 
     # Create a Game instance and set up the initial state
@@ -66,6 +68,7 @@ def test_start_level(setup_game):
     assert game._level_start_time is not None
     assert game._level_steps == 0
 
+
 def test_restart_level(setup_game):
     game = setup_game
 
@@ -83,6 +86,7 @@ def test_restart_level(setup_game):
     assert game._level_start_time is not None
     assert game._level_steps == 0
 
+
 def test_is_valid_position(setup_game):
     game = setup_game
 
@@ -93,8 +97,9 @@ def test_is_valid_position(setup_game):
 
     # Test invalid positions (outside bounds)
     assert game._is_valid_position((0, 8)) == False
-    assert game._is_valid_position((7, 0)) == False 
-    assert game._is_valid_position((-1, 0)) == False 
+    assert game._is_valid_position((7, 0)) == False
+    assert game._is_valid_position((-1, 0)) == False
+
 
 def test_move_player(setup_game):
     game = setup_game
@@ -109,7 +114,11 @@ def test_move_player(setup_game):
     game._move_player(new_position)
 
     # Assert that the player position is updated correctly
-    assert game._player.position.x == new_position[0] and game._player.position.y == new_position[1]
+    assert (
+        game._player.position.x == new_position[0]
+        and game._player.position.y == new_position[1]
+    )
+
 
 def test_get_box_next_position_down(setup_game):
     game = setup_game
@@ -131,6 +140,7 @@ def test_check_if_won_non_winning(setup_game):
     # Cleanup: remove the temporary file
     if os.path.exists(game.loaded_levels[0].file_path):
         os.remove(game.loaded_levels[0].file_path)
+
 
 def test_check_if_won_winning(winning_game):
     game = winning_game

@@ -8,7 +8,16 @@ from typing import Any, Type, ClassVar
 from pydantic import BaseModel, Field
 from os import listdir
 from os.path import isfile, join
-from model import Level,Box,Wall,Floor,Goal,Player,HorizontalDirectionEnum,VerticalDirectionEnum
+from model import (
+    Level,
+    Box,
+    Wall,
+    Floor,
+    Goal,
+    Player,
+    HorizontalDirectionEnum,
+    VerticalDirectionEnum,
+)
 
 
 class Game(BaseModel):
@@ -107,9 +116,9 @@ class Game(BaseModel):
                             i.image_path,
                             f"{vertical_direction}_{horizontal_direction}.png",
                         )
-                        player_images_dict[vertical_direction][horizontal_direction] = (
-                            pygame.image.load(path)
-                        )
+                        player_images_dict[vertical_direction][
+                            horizontal_direction
+                        ] = pygame.image.load(path)
                 self.item_images[i] = player_images_dict
             else:
                 image = pygame.image.load(i.image_path)
@@ -136,8 +145,12 @@ class Game(BaseModel):
         # Load title image
         original_title_image = pygame.image.load(self._title_path)
         title_width = int(self.screen_width * 0.8)
-        title_height = (original_title_image.get_height() * title_width) / original_title_image.get_width()
-        self._title_image = pygame.transform.scale(original_title_image, (title_width, title_height))
+        title_height = (
+            original_title_image.get_height() * title_width
+        ) / original_title_image.get_width()
+        self._title_image = pygame.transform.scale(
+            original_title_image, (title_width, title_height)
+        )
 
     def show_main_menu(self):
         size = self.text_size
@@ -320,7 +333,6 @@ class Game(BaseModel):
     def duration_to_str(self, duration):
         fullDuration = str(duration)
         return fullDuration.split(".")[0]
-
 
     def draw_level_text(self):
         size = self.text_size
@@ -558,7 +570,9 @@ class Game(BaseModel):
 
     def _move_player(self, position):
         # Remove player from current position
-        self._current_level.map.matrix[self._player.position.y][self._player.position.x][1] = None
+        self._current_level.map.matrix[self._player.position.y][
+            self._player.position.x
+        ][1] = None
 
         # Move player to new position
         self._player.position.x, self._player.position.y = position
@@ -592,7 +606,6 @@ class Game(BaseModel):
                     self.process_win_screen_events(event)
 
     def start_level(self):
-
         self._current_level_index = self.selected_level
         self._current_level = self.loaded_levels[
             self._current_level_index - 1
@@ -656,10 +669,11 @@ class Game(BaseModel):
         pygame.mixer.init()  # Initialize the mixer here
 
     def play_music(self):
-        pygame.mixer.music.load(self._music_path)  # Load music after initializing the mixer
+        pygame.mixer.music.load(
+            self._music_path
+        )  # Load music after initializing the mixer
         pygame.mixer.music.set_volume(self._music_volume)
         pygame.mixer.music.play(loops=-1)  # Play music in the background
-
 
     def run(self):
         self.init_game()
