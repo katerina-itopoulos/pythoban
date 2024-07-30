@@ -5,10 +5,11 @@ from game import Game
 
 @pytest.fixture
 def game():
-    # Create a Game instance and initialize it
-    game_instance = Game()
-    game_instance.init_game()
-    yield game_instance
+    with patch('pygame.mixer.init') as mock_mixer_init:
+        # Create a Game instance and initialize it
+        game_instance = Game()
+        game_instance.init_game()
+        return game_instance
 
 @patch('pygame.mixer.music.load')  # Mock the music loading
 @patch('pygame.mixer.music.play')  # Mock the music playing
