@@ -11,7 +11,6 @@ from os.path import isfile, join
 from model import Level,Box,Wall,Floor,Goal,Player,HorizontalDirectionEnum,VerticalDirectionEnum
 
 
-
 class Game(BaseModel):
     _current_level_index: int = 0  # 0 Is main menu, -1 is choosing level
     _current_level: Level | None
@@ -559,9 +558,7 @@ class Game(BaseModel):
 
     def _move_player(self, position):
         # Remove player from current position
-        self._current_level.map.matrix[self._player.position.y][
-            self._player.position.x
-        ][1] = None
+        self._current_level.map.matrix[self._player.position.y][self._player.position.x][1] = None
 
         # Move player to new position
         self._player.position.x, self._player.position.y = position
