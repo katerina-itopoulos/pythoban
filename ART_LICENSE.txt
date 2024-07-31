@@ -83,7 +83,7 @@ Level Designs
     - Source: [Strategy 29](https://www.sokobanonline.com/play/web-archive/alberto-garcia/strategy/3899_strategy-29)
     - Designer: Alberto Garcia
 
-## Acknowledgments
+Acknowledgments
 
 We would like to express our gratitude to all the artists and platforms that made their resources available to the public. This project would not have been possible without their generous contributions. Please refer to the respective licenses for more information on the use and distribution of their work.
 
