@@ -1,0 +1,102 @@
+# Pythoban Game Artist License
+
+This document provides a list of image sources, design inspirations, and resources used in the development of the Pythoban game. We are grateful for the contributions of these artists and platforms that helped make this project possible.
+
+## Game and Platform Inspiration
+
+1. **Sokoban Online Game Platform**
+   - Website: [Sokoban Online](https://www.sokobanonline.com/)
+   - Description: This platform provided the foundational concept and gameplay mechanics for the Sokoban puzzle design used in Pythoban.
+   
+2. **Sokoban Origins and How to Play**
+   - Source: [Wikipedia - Sokoban](https://en.wikipedia.org/wiki/Sokoban)
+   - Description: This page offered insights into the origins and rules of Sokoban, influencing the gameplay dynamics of Pythoban.
+
+## Development Tools and Documentation
+
+3. **Pygame Documentation**
+   - Website: [Pygame](https://www.pygame.org/docs/)
+   - Description: This documentation was crucial for understanding the functions and classes used in the game development process.
+
+4. **Pytest Documentation**
+   - Website: [Pytest](https://docs.pytest.org/)
+   - Description: Used for setting up testing frameworks to ensure game stability and performance.
+
+## Design and Visual Inspiration
+
+5. **Welcome Screen Design Inspiration**
+   - Source 1: [Adobe Stock - 8-bit Templates](https://stock.adobe.com/th/search/templates?k=8bit&asset_id=630846310)
+   - Source 2: [Pinterest - Pixel Art](https://www.pinterest.de/pin/542050505152122609/)
+   - Description: These sources inspired the retro 8-bit style welcome screen design for the game.
+
+## Image Sources
+
+7. **Restart Button**
+   - Image: [Restart Button](https://opengameart.org/content/restart-button)
+   - Artist: Andi
+   - License: CC-BY 3.0, CC-BY-SA 3.0, GPL 3.0, GPL 2.0
+
+8. **Boxes**
+   - Image: [Boxes and Crates](https://opengameart.org/content/boxes-and-crates-svg-and-pngs)
+   - Artist: [Various Contributors]
+   - License: Public Domain (CC0)
+   
+9. **Tiles, Wall, and Floor**
+   - Image: [Sokoban 100+ Tiles](https://opengameart.org/content/sokoban-100-tiles)
+   - Artist: Kenney
+   - License: Public Domain (CC0)
+
+10. **Pythoban/Player Images**
+    - Image: [Isometric Snakes](https://opengameart.org/content/isometric-snakes)
+    - Artist: Yolkati
+    - License: CC-BY-SA 4.0, GPL 3.0, GPL 2.0
+
+11. **Font Used for Titles, Levels, etc.**
+    - Font: [Minecraft Font](https://www.dafont.com/minecraft.font)
+    - Designer: Craftron Gaming
+    - License: Copyright-free
+
+12. **Background Music**
+    - Music: [Menu Music](https://opengameart.org/content/menu-music)
+    - Artist: [Various Contributors]
+    - License: Public Domain (CC0)
+
+## Level Designs
+
+13. **Level 1 Design**
+    - Source: [Classic Box](https://www.sokobanonline.com/play/tutorials/76067_classic-box)
+    - Designer: [Sokoban Online]
+
+14. **Level 2 Design**
+    - Source: [Lesson 1-4](https://www.sokobanonline.com/play/lessons/4876_lesson-1-4)
+    - Designer: [Sokoban Online]
+
+15. **Level 3 Design**
+    - Source: [3 Levels](https://www.sokobanonline.com/play/just-for-fun/85339_3-levels)
+    - Designer: David Bau
+
+16. **Level 4 Design**
+    - Source: [Tempo 1](https://www.sokobanonline.com/play/community/pgt/pgt/132944_tempo-1)
+    - Designer: PGT
+
+17. **Level 5 Design**
+    - Source: [Strategy 29](https://www.sokobanonline.com/play/web-archive/alberto-garcia/strategy/3899_strategy-29)
+    - Designer: Alberto Garcia
+
+## Acknowledgments
+
+We would like to express our gratitude to all the artists and platforms that made their resources available to the public. This project would not have been possible without their generous contributions. Please refer to the respective licenses for more information on the use and distribution of their work.
+
+---
+
+### Note:
+
+- **CC-BY 3.0**: Creative Commons Attribution 3.0 Unported License
+- **CC-BY-SA 3.0**: Creative Commons Attribution-ShareAlike 3.0 Unported License
+- **CC0**: Creative Commons Zero - Public Domain
+- **GPL 2.0**: GNU General Public License version 2
+- **GPL 3.0**: GNU General Public License version 3
+- **CC-BY-SA 4.0**: Creative Commons Attribution-ShareAlike 4.0 International License
+
+Please ensure to review and comply with each resource's individual license requirements for further details about usage rights and restrictions.
+
