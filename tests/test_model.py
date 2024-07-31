@@ -5,8 +5,9 @@ import tempfile
 import os
 import json
 
-#This video was used to gain a better understanding of how to unit test with pytest
-#https://www.youtube.com/watch?v=YbpKMIUjvK8&ab_channel=pixegami
+# This video was used to gain a better understanding of how to unit test with pytest
+# https://www.youtube.com/watch?v=YbpKMIUjvK8&ab_channel=pixegami
+
 
 # Define a fixture that sets up a temporary file with test data
 @pytest.fixture
@@ -15,13 +16,7 @@ def level_file():
     test_map = "WWW    \nWGWWWWW\nWGG    \nW BBBPW\nW    WW\nWWWWWW "
 
     # Create test level data including the map and score using hjson syntax
-    level_data = {
-        "map": test_map,
-        "score": {
-            "time": 0,
-            "steps": 0
-        }
-    }
+    level_data = {"map": test_map, "score": {"time": 0, "steps": 0}}
 
     # Create a temporary file and write the HJSON data into it
     temp_file = tempfile.NamedTemporaryFile(delete=False, mode="w+")
@@ -33,6 +28,7 @@ def level_file():
 
     # Clean up the file after tests complete
     os.remove(temp_file.name)
+
 
 # Test to verify loading from file
 def test_load_from_file(level_file):
@@ -50,7 +46,9 @@ def test_load_from_file(level_file):
     # Verify that the file path is correctly stored in the level object
     assert level.file_path == level_file
 
+
 # Test to verify score updates are correctly applied
+
 
 def test_update_score_improves_score(level_file):
     # Load the level from the file
@@ -72,12 +70,11 @@ def test_update_score_improves_score(level_file):
     assert level.score.steps == 3
 
 
-
 # Test to ensure that saving works as expected
 def test_save(level_file):
     # Load the level from the file
     level = Level.load_from_file(level_file)
-    
+
     # Update the score and save the level
     level.update_score(10, 5)
     level.save()
@@ -91,11 +88,12 @@ def test_save(level_file):
     assert data["score"]["time"] == 10
     assert data["score"]["steps"] == 5
 
+
 # Test for updating the score from an initial zero state
 def test_update_score_with_initial_zero(level_file):
     # Load the level from the file
     level = Level.load_from_file(level_file)
-    
+
     # Attempt to update the score with zero values
     level.update_score(0, 0)
     assert level.score.time == 0

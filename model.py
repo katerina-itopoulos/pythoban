@@ -1,6 +1,6 @@
 import json
 from pydantic import BaseModel, Field
-from enum import Enum, ReprEnum,ReprEnum
+from enum import Enum, ReprEnum, ReprEnum
 from typing import List, Union, ClassVar
 
 
@@ -15,13 +15,15 @@ class Score(BaseModel):
 
 
 class HorizontalDirectionEnum(str, ReprEnum):
-    left = 'left'
-    right = 'right'
+    left = "left"
+    right = "right"
 
-class VerticalDirectionEnum(str,ReprEnum):
-    up = 'up'
-    down = 'down'
-    
+
+class VerticalDirectionEnum(str, ReprEnum):
+    up = "up"
+    down = "down"
+
+
 class Player(BaseModel):
     position: Position
     last_vertical_direction: VerticalDirectionEnum = VerticalDirectionEnum.down
@@ -33,23 +35,25 @@ class AbstractItem(BaseModel):
     """
     Abstract base class for items in Pythoban
     """
-    position : Position
-    image_path : str
-    symbol : str
-  
+
+    position: Position
+    image_path: str
+    symbol: str
+
+
 class Box(AbstractItem):
     position: Position
-    image_path: ClassVar[str] = (
-        "images/kenney_sokobanPack/PNG/Default size/Crates/crate_42.png"
-    )
+    image_path: ClassVar[
+        str
+    ] = "images/kenney_sokobanPack/PNG/Default size/Crates/crate_42.png"
     symbol: str = "B"
 
 
 class Goal(AbstractItem):
     position: Position
-    image_path: ClassVar[str] = (
-        "images/kenney_sokobanPack/PNG/Default size/Environment/environment_04.png"
-    )
+    image_path: ClassVar[
+        str
+    ] = "images/kenney_sokobanPack/PNG/Default size/Environment/environment_04.png"
     symbol: str = "G"
     # box : Box
     # color : str
@@ -57,17 +61,17 @@ class Goal(AbstractItem):
 
 class Wall(AbstractItem):
     position: Position
-    image_path: ClassVar[str] = (
-        "images/kenney_sokobanPack/PNG/Default size/Blocks/block_04.png"
-    )
+    image_path: ClassVar[
+        str
+    ] = "images/kenney_sokobanPack/PNG/Default size/Blocks/block_04.png"
     symbol: str = "W"
 
 
 class Floor(AbstractItem):
     position: Position
-    image_path: ClassVar[str] = (
-        "images/kenney_sokobanPack/PNG/Default size/Ground/ground_06.png"
-    )
+    image_path: ClassVar[
+        str
+    ] = "images/kenney_sokobanPack/PNG/Default size/Ground/ground_06.png"
     symbol: str = " "
 
 
