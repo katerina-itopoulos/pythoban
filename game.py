@@ -1,5 +1,5 @@
 """
-Pythoban Game Logic 
+Pythoban Game Logic
 """
 
 import pygame
@@ -122,9 +122,9 @@ class Game(BaseModel):
                     player_class.image_path,
                     f"{vertical_direction}_{horizontal_direction}.png",
                 )
-                player_images_dict[vertical_direction][
-                    horizontal_direction
-                ] = pygame.image.load(image_path)
+                player_images_dict[vertical_direction][horizontal_direction] = (
+                    pygame.image.load(image_path)
+                )
         return player_images_dict
 
     def load_static_item_images(self, item_class):
@@ -341,9 +341,11 @@ class Game(BaseModel):
                     (self.screen_height / 3.1)
                     + (self._current_level_index * font.get_height()),
                 ),
-                color=self._selected_option_color
-                if self.selected_level == self._current_level_index + 1
-                else self._unselected_option_color,
+                color=(
+                    self._selected_option_color
+                    if self.selected_level == self._current_level_index + 1
+                    else self._unselected_option_color
+                ),
             )
 
     def _show_win_screen_go_back(self, font):
@@ -357,9 +359,11 @@ class Game(BaseModel):
                 (self.screen_height / 2.5)
                 + (len(self.loaded_levels) * font.get_height()),
             ),
-            color=self._selected_option_color
-            if self.selected_level == 0
-            else self._unselected_option_color,
+            color=(
+                self._selected_option_color
+                if self.selected_level == 0
+                else self._unselected_option_color
+            ),
         )
 
     def _render_text(self, text, font, center, color):

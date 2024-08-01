@@ -43,17 +43,17 @@ class AbstractItem(BaseModel):
 
 class Box(AbstractItem):
     position: Position
-    image_path: ClassVar[
-        str
-    ] = "images/kenney_sokobanPack/PNG/Default size/Crates/crate_42.png"
+    image_path: ClassVar[str] = (
+        "images/kenney_sokobanPack/PNG/Default size/Crates/crate_42.png"
+    )
     symbol: str = "B"
 
 
 class Goal(AbstractItem):
     position: Position
-    image_path: ClassVar[
-        str
-    ] = "images/kenney_sokobanPack/PNG/Default size/Environment/environment_04.png"
+    image_path: ClassVar[str] = (
+        "images/kenney_sokobanPack/PNG/Default size/Environment/environment_04.png"
+    )
     symbol: str = "G"
     # box : Box
     # color : str
@@ -61,17 +61,17 @@ class Goal(AbstractItem):
 
 class Wall(AbstractItem):
     position: Position
-    image_path: ClassVar[
-        str
-    ] = "images/kenney_sokobanPack/PNG/Default size/Blocks/block_04.png"
+    image_path: ClassVar[str] = (
+        "images/kenney_sokobanPack/PNG/Default size/Blocks/block_04.png"
+    )
     symbol: str = "W"
 
 
 class Floor(AbstractItem):
     position: Position
-    image_path: ClassVar[
-        str
-    ] = "images/kenney_sokobanPack/PNG/Default size/Ground/ground_06.png"
+    image_path: ClassVar[str] = (
+        "images/kenney_sokobanPack/PNG/Default size/Ground/ground_06.png"
+    )
     symbol: str = " "
 
 

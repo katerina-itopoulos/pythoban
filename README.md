@@ -30,7 +30,7 @@ Black <br>
 # Instructions for installation
 
 1. Open your terminal or command prompt<br>
-   
+
 2. Git is required for this method of installation, so if not installed - download Git <br>
 
 3. Clone this repository <br>
@@ -100,7 +100,7 @@ Development Tools and Documentation
 2. Pytest Documentation
    - Website: [Pytest](https://docs.pytest.org/)
    - Description: Used for setting up testing frameworks to ensure game stability and performance.
-  
+
 3. Github Actions Documentation
    - Website: [GithubActions](https://docs.github.com/en/actions)
    - Description : Used to set up continuous integration for our project.
@@ -109,4 +109,3 @@ Development Tools and Documentation
 ## Art and Game References
 
 Can be found in the document titled ART_LICENSE.txt
-
