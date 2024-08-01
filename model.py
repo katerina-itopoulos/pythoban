@@ -37,7 +37,7 @@ class AbstractItem(BaseModel):
     """
 
     position: Position
-    image_path: str
+    image_path: ClassVar[str]
     symbol: str
 
 

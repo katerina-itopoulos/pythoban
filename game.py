@@ -53,7 +53,7 @@ class Game(BaseModel):
     _selected_option_color = "green"
     _unselected_option_color = "white"
 
-    selected_option_main_menu: int = "newGame"
+    selected_option_main_menu: str = "newGame"
     title_text: str = "Pythoban"
     texts: dict[str, str] = {
         "newGame": "New Game",
