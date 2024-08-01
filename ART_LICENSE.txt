@@ -7,7 +7,7 @@ Game and Platform Inspiration
 1. Sokoban Online Game Platform
    - Website: [Sokoban Online](https://www.sokobanonline.com/)
    - Description: This platform provided the foundational concept and gameplay mechanics for the Sokoban puzzle design used in Pythoban.
-   
+
 2. Sokoban Origins and How to Play
    - Source: [Wikipedia - Sokoban](https://en.wikipedia.org/wiki/Sokoban)
    - Description: This page offered insights into the origins and rules of Sokoban, influencing the gameplay dynamics of Pythoban.
@@ -31,7 +31,7 @@ Image Sources
    - Image: [Boxes and Crates](https://opengameart.org/content/boxes-and-crates-svg-and-pngs)
    - Artist: [Various Contributors]
    - License: Public Domain (CC0)
-   
+
 6. Tiles, Wall, and Floor
    - Image: [Sokoban 100+ Tiles](https://opengameart.org/content/sokoban-100-tiles)
    - Artist: Kenney
@@ -88,4 +88,3 @@ Note:
 - GPL 2.0: GNU General Public License version 2
 - GPL 3.0: GNU General Public License version 3
 - CC-BY-SA 4.0: Creative Commons Attribution-ShareAlike 4.0 International License
-
