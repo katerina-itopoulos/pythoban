@@ -4,7 +4,8 @@ Pythoban Game Logic
 
 import pygame
 from datetime import datetime, timedelta
-from typing import Any, Type, ClassVar
+from typing import Any, Type, ClassVar, List
+from enum import ReprEnum
 from pydantic import BaseModel, Field
 from os import listdir
 from os.path import isfile, join
@@ -76,7 +77,7 @@ class Game(BaseModel):
     class Config:
         arbitrary_types_allowed = True
 
-    def __init__(self, **data):
+    def __init__(self, **data) -> None:
         super().__init__(**data)
         self.text_size = self.screen_height // 10
 
@@ -89,20 +90,19 @@ class Game(BaseModel):
             new_time_in_seconds, new_steps
         )
 
-    def get_file_paths_in_dir(self, directory):
+    def get_file_paths_in_dir(self, directory: str) -> List[str]:
         return [
             join(directory, file)
             for file in listdir(directory)
             if isfile(join(directory, file))
         ]
 
-    def load_levels(self):
+    def load_levels(self) -> None:
         levels_files_paths = self.get_file_paths_in_dir(self.levels_directory)
         levels_files_paths.sort()
         self.loaded_levels = [
             Level.load_from_file(level_file) for level_file in levels_files_paths
         ]
-        # print([l.file_path for l in self.loaded_levels])
 
     def load_item_images(self):
         items = [Box, Floor, Wall, Goal, Player]
@@ -127,7 +127,7 @@ class Game(BaseModel):
                 )
         return player_images_dict
 
-    def load_static_item_images(self, item_class):
+    def load_static_item_images(self, item_class: Type) -> List[pygame.Surface]:
         """Load images for static items and apply transparency."""
         image = pygame.image.load(item_class.image_path)
         number_of_images = 4
@@ -138,14 +138,14 @@ class Game(BaseModel):
 
         return images
 
-    def load_images(self):
+    def load_images(self) -> None:
         """Load all game-related images."""
         self.load_item_images()
         self.load_restart_button_image()
         self.load_background_image()
         self.load_title_image()
 
-    def load_restart_button_image(self):
+    def load_restart_button_image(self) -> None:
         """Load the restart button image and set its position."""
         self.restart_button_image = pygame.image.load(self.BUTTON_IMAGE_PATH)
         if self.restart_button_image:
@@ -171,13 +171,13 @@ class Game(BaseModel):
             original_title_image, (title_width, title_height)
         )
 
-    def show_main_menu(self):
+    def show_main_menu(self) -> None:
         """Display the main menu with a title and selectable options."""
         font = self.get_font(self.text_size)
         self.display_title()
         self.display_menu_options(font)
 
-    def get_font(self, size):
+    def get_font(self, size: int) -> pygame.font.Font:
         """Return a font object of a given size."""
         return pygame.font.Font(self._fontPath, size)
 
@@ -188,14 +188,14 @@ class Game(BaseModel):
         )
         self.screen.blit(self._title_image, text_rect)
 
-    def display_menu_options(self, font):
+    def display_menu_options(self, font: pygame.font.Font) -> None:
         """Display each menu option with appropriate styling."""
         for index, text_key in enumerate(self.texts):
             text_surface = self.get_text_surface(font, text_key)
             text_rect = self.get_text_rect(text_surface, index)
             self.screen.blit(text_surface, text_rect)
 
-    def get_text_surface(self, font, text_key):
+    def get_text_surface(self, font: pygame.font.Font, text_key: str) -> pygame.Surface:
         """Render the text surface for a menu option."""
         font.set_underline(self.selected_option_main_menu == text_key)
         color = (
@@ -205,7 +205,7 @@ class Game(BaseModel):
         )
         return font.render(self.texts[text_key], True, color)
 
-    def get_text_rect(self, text_surface, index):
+    def get_text_rect(self, text_surface, index: int) -> pygame.Surface:
         """Get the position for a menu option's text surface."""
         return text_surface.get_rect(
             center=(
@@ -219,7 +219,7 @@ class Game(BaseModel):
         self.show_choose_level_menu_levels()
         self.show_choose_level_menu_goback()
 
-    def show_choose_level_menu_title(self):
+    def show_choose_level_menu_title(self) -> None:
         size = self.text_size
         font = pygame.font.Font(self._fontPath, size)
         text_surface = font.render(
@@ -366,12 +366,12 @@ class Game(BaseModel):
             ),
         )
 
-    def _render_text(self, text, font, center, color):
+    def _render_text(self, text, font: pygame.font.Font, center, color):
         text_surface = font.render(text, True, color)
         text_rect = text_surface.get_rect(center=center)
         self.screen.blit(text_surface, text_rect)
 
-    def duration_to_str(self, duration):
+    def duration_to_str(self, duration: timedelta) -> str:
         fullDuration = str(duration)
         return fullDuration.split(".")[0]
 
@@ -383,7 +383,7 @@ class Game(BaseModel):
         self._draw_score_and_time(size)
         self._draw_steps(size)
 
-    def _draw_level_title(self, font):
+    def _draw_level_title(self, font: pygame.font.Font):
         level_text = f"Level {self._current_level_index}"
         self._draw_level_text(
             level_text,
@@ -418,7 +418,9 @@ class Game(BaseModel):
             color=self._unselected_option_color,
         )
 
-    def _draw_level_text(self, text, font, center=None, topleft=None, color=None):
+    def _draw_level_text(
+        self, text, font: pygame.font.Font, center=None, topleft=None, color=None
+    ):
         text_surface = font.render(text, True, color)
         if center:
             text_rect = text_surface.get_rect(center=center)
