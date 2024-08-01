@@ -83,9 +83,9 @@ See `ART_LICENSE.TXT` for a list of the authors who designed the images and grap
 
 # Authors
 
-Katerina Itopoulos <br>
-Juan Méndez Nogales <br>
-David Rodrigues <br>
+Katerina Itopoulos (3121849) <br>
+Juan Méndez Nogales(3121979) <br>
+David Rodrigues(3121891)<br>
 
 # References
 
