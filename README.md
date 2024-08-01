@@ -12,7 +12,6 @@ Information from : https://en.wikipedia.org/wiki/Sokoban
 
 Welcome to Pythoban! Our game is designed to be a fun problem-solving challenge with multiple levels and engaging graphics and sounds derived from Sokoban.
 
-# Features
 
 # Installation Guide
 
@@ -20,6 +19,12 @@ Welcome to Pythoban! Our game is designed to be a fun problem-solving challenge 
 
 Python 3.11 <br>
 Pygame 2.0
+
+# Development Requirements
+
+Pytest <br>
+Black <br>
+
 
 # Instructions for installation
 
