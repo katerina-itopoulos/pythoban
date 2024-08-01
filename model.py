@@ -55,8 +55,6 @@ class Goal(AbstractItem):
         "images/kenney_sokobanPack/PNG/Default size/Environment/environment_04.png"
     )
     symbol: str = "G"
-    # box : Box
-    # color : str
 
 
 class Wall(AbstractItem):
