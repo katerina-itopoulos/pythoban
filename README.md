@@ -18,7 +18,8 @@ Welcome to Pythoban! Our game is designed to be a fun problem-solving challenge 
 # Requirements
 
 Python 3.11 <br>
-Pygame 2.0
+Pygame 2.0<br>
+Git<br>
 
 # Development Requirements
 
@@ -28,17 +29,24 @@ Black <br>
 
 # Instructions for installation
 
-1. Clone this repository <br>
-   `git clone https://github.com/katerina-itopoulos/pythoban.git` <br>
-   `cd pythoban` <br>
-2. Install the required dependencies <br>
+1. Open your terminal or command prompt<br>
+   
+2. Git is required for this method of installation, so if not installed - download Git <br>
 
+3. Clone this repository <br>
+   `git clone https://github.com/katerina-itopoulos/pythoban.git` <br>
+
+4. Navigate into the project directory <br>
+   `cd pythoban` <br>
+
+5. Install the required dependencies <br>
    `pip install -r requirements.txt ` <br>
    `pip install -r dev_requirements.txt `<br>
 
-3. Run the game <br>
+6. Start the game by executing<br>
    `python main.py` <br>
-4. Testing <br>
+
+7. Run the tests to make sure everything is working correctly <br>
    `pytest` to run all the tests. <br>
 
 # How to play
