@@ -330,7 +330,7 @@ class Game(BaseModel):
         )
 
     def _show_win_screen_levels(self, font):
-        if self._current_level_index + 1 < len(self.loaded_levels):
+        if self._current_level_index < len(self.loaded_levels):
             font.set_underline(self.selected_level == self._current_level_index + 1)
             level_text = f"Level {self._current_level_index + 1}"
             self._render_text(
@@ -552,7 +552,7 @@ class Game(BaseModel):
     def process_win_screen_events(self, event):
         if event.type == pygame.KEYDOWN:
             keys = pygame.key.get_pressed()
-            if self._current_level_index + 1 < len(self.loaded_levels):
+            if self._current_level_index < len(self.loaded_levels):
                 if keys[pygame.K_DOWN]:
                     self.selected_level = (
                         0

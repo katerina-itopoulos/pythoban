@@ -29,6 +29,7 @@ Pygame 2.0
 2. Install the required dependencies <br>
 
    `pip install -r requirements.txt ` <br>
+   `pip install -r dev_requirements.txt `<br>
 
 3. Run the game <br>
    `python main.py` <br>
@@ -39,16 +40,11 @@ Pygame 2.0
 
 The game starts at the main menu screen where the player can select the level. <br>
 The player can move using the arrow keys : up, down, left and right. <br>
-The goal is to push the boxes into their corresponding goals/targets marked on the map. <br>
+The goal is to push the boxes into goal objects marked on the map. <br>
 The player can only push boxes, it cannot pull. <br>
 The score is tracked using the number of steps taken and time for each level. <br> <br>
-
 Each course is surrounded by and includes various wall items which cannot be pushed and act as boundaries. <br>
-There are obstacles on each level which result in irregular behaviour. <br>
-Magnet items will attach to boxes stopping them from moving unless the corresponding switch has been pressed down by a box. <br>
-Water items will make the game unsolvable if a box with a goal or player steps on it. Water can be climbed over if a box without a goal has been pushed in to act as a bridge. <br>
-Portal items allow the player and box to travel to the corresponding portal. <br>
-Hole items will make the game unsolvable if the player or box with a goal falls inside. Holes can be closed if a box without a goal is pushed inside it. <br> <br>
+
 
 ## Levels
 
@@ -70,7 +66,7 @@ In our pythoban game, each level contains a different map with a variety of item
 
 (c) 2024 Katerina Itopoulos, Juan Méndez Nogales and David Rodrigues. <br>
 The Python code for this project is distributed under the conditions of the MIT License. See `LICENSE.TXT` for details. <br>
-The graphics are taken from .... . See `ART_LICENSE.TXT` for a list of the authors.
+See `ART_LICENSE.TXT` for a list of the authors who designed the images and graphics used to build our Pythoban game.
 
 # Authors
 
@@ -82,16 +78,22 @@ David Rodrigues <br>
 
 # Code References
 
-- Implemented using the Pygame library: https://www.pygame.org/ and it's provided examples and getting started tutorials.
+Development Tools and Documentation
 
-## Art References
+1. Pygame Documentation
+   - Website: [Pygame](https://www.pygame.org/docs/)
+   - Description: This documentation was crucial for understanding the functions and classes used in the game development process.
 
-- Player Images: https://opengameart.org/content/isometric-snakes
-- Blocks: https://opengameart.org/content/sokoban-100-tiles
-- Font: https://www.dafont.com/minecraft.font
-- Music: https://opengameart.org/content/menu-music
-- TODO: References to the background image and logo made by David.
+2. Pytest Documentation
+   - Website: [Pytest](https://docs.pytest.org/)
+   - Description: Used for setting up testing frameworks to ensure game stability and performance.
+  
+3. Github Actions Documentation
+   - Website: [GithubActions](https://docs.github.com/en/actions)
+   - Description : Used to set up continuous integration for our project.
 
-https://en.wikipedia.org/wiki/Sokoban <br>
-https://en.wikipedia.org/wiki/Baba_Is_You <br>
-https://www.sokobanonline.com/help/how-to-play <br>
+
+## Art and Game References
+
+Can be found in the document titled ART_LICENSE.txt
+
