@@ -28,8 +28,8 @@ Black <br>
 
 # Instructions for installation
 
-1. Clone this repository <be>
-   `git clone <enter url for our repo>` <br>
+1. Clone this repository <br>
+   `git clone https://github.com/katerina-itopoulos/pythoban.git` <br>
    `cd pythoban` <br>
 2. Install the required dependencies <br>
 
