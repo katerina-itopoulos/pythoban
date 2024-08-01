@@ -104,6 +104,9 @@ Development Tools and Documentation
 3. Github Actions Documentation
    - Website: [GithubActions](https://docs.github.com/en/actions)
    - Description : Used to set up continuous integration for our project.
+  
+4. Pre-commit Hook
+   -Website : [Pre-commit Hook] (https://ljvmiranda921.github.io/notebook/2018/06/21/precommits-using-black-and-flake8/) 
 
 
 ## Art and Game References
